@@ -8,170 +8,160 @@ interface Product {
   name: string
   price: number
   image: string
-  colors: string[]
-  sizes: string[]
   category: string
+  sizes: string[]
 }
 
 const products: Product[] = [
   {
     id: '1',
-    name: 'Polo Clásico',
-    price: 89.90,
+    name: 'CAMISA BOXY-FIT ESSENTIAL',
+    price: 150.00,
     image: '/product-1.jpg',
-    colors: ['Negro', 'Blanco', 'Gris'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    category: 'Polos'
+    category: 'camisas',
+    sizes: ['S', 'M', 'L']
   },
   {
     id: '2',
-    name: 'Box-sizing Premium',
-    price: 129.90,
+    name: 'CAMISA BOXY-FIT CLASSIC',
+    price: 160.00,
     image: '/product-2.jpg',
-    colors: ['Azul', 'Negro', 'Beige'],
-    sizes: ['S', 'M', 'L'],
-    category: 'Box-sizing'
+    category: 'camisas',
+    sizes: ['S', 'M', 'L']
   },
   {
     id: '3',
-    name: 'Hoodie Essential',
-    price: 159.90,
+    name: 'ZIP HOODIE ESSENTIAL',
+    price: 180.00,
     image: '/product-3.jpg',
-    colors: ['Negro', 'Gris', 'Verde'],
-    sizes: ['M', 'L', 'XL'],
-    category: 'Hoodies'
+    category: 'hoodies',
+    sizes: ['S', 'M', 'L']
   },
+  {
+    id: '4',
+    name: 'ZIP HOODIE CLASSIC',
+    price: 190.00,
+    image: '/product-4.jpg',
+    category: 'hoodies',
+    sizes: ['S', 'M', 'L']
+  },
+  {
+    id: '5',
+    name: 'POLO BOXY-FIT ESSENTIAL',
+    price: 120.00,
+    image: '/product-5.jpg',
+    category: 'polos',
+    sizes: ['S', 'M', 'L']
+  },
+  {
+    id: '6',
+    name: 'POLO BOXY-FIT CLASSIC',
+    price: 130.00,
+    image: '/product-6.jpg',
+    category: 'polos',
+    sizes: ['S', 'M', 'L']
+  }
 ]
 
-const categories = ['Todos', 'Polos', 'Camisas boxy-fit', 'Zip Hoddies']
-const sizes = ['S', 'M', 'L']
-const priceRanges = [
-  { label: 'Menos de S/. 100', value: '0-100' },
-  { label: 'S/. 100 - S/. 150', value: '100-150' },
-  { label: 'Más de S/. 150', value: '150-999' },
+const categories = [
+  { id: 'camisas', name: 'CAMISAS BOXY-FIT' },
+  { id: 'hoodies', name: 'ZIP HOODIES' },
+  { id: 'polos', name: 'POLOS BOXY-FIT' }
 ]
 
 export default function Tienda() {
-  const [selectedCategory, setSelectedCategory] = useState('Todos')
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([])
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>('')
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [selectedSize, setSelectedSize] = useState<string>('')
 
-  const filteredProducts = products.filter((product) => {
-    const categoryMatch = selectedCategory === 'Todos' || product.category === selectedCategory
-    const sizeMatch = selectedSizes.length === 0 || product.sizes.some(size => selectedSizes.includes(size))
-    const priceMatch = !selectedPriceRange || (() => {
-      const [min, max] = selectedPriceRange.split('-').map(Number)
-      return product.price >= min && product.price <= max
-    })()
-    return categoryMatch && sizeMatch && priceMatch
+  const filteredProducts = products.filter(product => {
+    const categoryMatch = !selectedCategory || product.category === selectedCategory
+    const sizeMatch = !selectedSize || product.sizes.includes(selectedSize)
+    return categoryMatch && sizeMatch
   })
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Filtros */}
-        <div className="space-y-8">
-          {/* Categorías */}
-          <div>
-            <h3 className="text-lg font-brand font-medium mb-4">Categorías</h3>
-            <div className="space-y-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`block w-full text-left px-3 py-2 rounded-md transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-primary-500 text-white'
-                      : 'text-primary-800 hover:bg-primary-50'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Tallas */}
-          <div>
-            <h3 className="text-lg font-brand font-medium mb-4">Tallas</h3>
-            <div className="flex flex-wrap gap-2">
-              {sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => {
-                    setSelectedSizes((prev) =>
-                      prev.includes(size)
-                        ? prev.filter((s) => s !== size)
-                        : [...prev, size]
-                    )
-                  }}
-                  className={`px-3 py-1 rounded-md border transition-colors ${
-                    selectedSizes.includes(size)
-                      ? 'bg-primary-500 text-white border-primary-500'
-                      : 'border-primary-200 text-primary-800 hover:bg-primary-50'
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Rango de Precios */}
-          <div>
-            <h3 className="text-lg font-brand font-medium mb-4">Precio</h3>
-            <div className="space-y-2">
-              {priceRanges.map((range) => (
-                <button
-                  key={range.value}
-                  onClick={() => setSelectedPriceRange(range.value)}
-                  className={`block w-full text-left px-3 py-2 rounded-md transition-colors ${
-                    selectedPriceRange === range.value
-                      ? 'bg-primary-500 text-white'
-                      : 'text-primary-800 hover:bg-primary-50'
-                  }`}
-                >
-                  {range.label}
-                </button>
-              ))}
-            </div>
-          </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <div className="relative h-[80vh]">
+        <Image
+          src="/shop-hero.jpg"
+          alt="Tienda VirroProject"
+          fill
+          className="object-cover"
+          priority
+          quality={100}
+          unoptimized
+        />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+          <h1 className="text-4xl md:text-6xl font-light tracking-wider text-white">TIENDA</h1>
         </div>
+      </div>
 
-        {/* Lista de Productos */}
-        <div className="lg:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-brand font-medium text-lg text-primary-800">
+      <div className="max-w-[1600px] mx-auto px-4 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
+          {/* Filtros */}
+          <div className="space-y-12">
+            {/* Categorías */}
+            <div>
+              <h2 className="text-sm font-medium uppercase tracking-wider mb-6">CATEGORÍAS</h2>
+              <div className="space-y-2">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(selectedCategory === category.id ? '' : category.id)}
+                    className={`block w-full text-left py-2 text-sm tracking-wider transition-colors duration-300 ${
+                      selectedCategory === category.id
+                        ? 'text-primary-800'
+                        : 'text-primary-600 hover:text-primary-800'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Talla */}
+            <div>
+              <h2 className="text-sm font-medium uppercase tracking-wider mb-6">TALLA</h2>
+              <div className="flex gap-2">
+                {['S', 'M', 'L'].map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(selectedSize === size ? '' : size)}
+                    className={`w-10 h-10 flex items-center justify-center border text-sm tracking-wider transition-all duration-300 ${
+                      selectedSize === size
+                        ? 'border-primary-800 text-primary-800'
+                        : 'border-primary-200 text-primary-600 hover:border-primary-800'
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Productos */}
+          <div className="md:col-span-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="group">
+                  <div className="relative aspect-square mb-4 overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <h3 className="text-sm font-medium tracking-wider mb-1 transition-colors duration-300 group-hover:text-primary-800">
                     {product.name}
                   </h3>
-                  <p className="text-primary-600 font-semibold mt-1">
-                    S/. {product.price.toFixed(2)}
-                  </p>
-                  <div className="mt-3">
-                    <p className="text-sm text-primary-700">
-                      Colores: {product.colors.join(', ')}
-                    </p>
-                    <p className="text-sm text-primary-700 mt-1">
-                      Tallas: {product.sizes.join(', ')}
-                    </p>
-                  </div>
+                  <p className="text-sm text-primary-600">S/. {product.price.toFixed(2)}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
