@@ -43,8 +43,8 @@ const products: Product[] = [
   },
 ]
 
-const categories = ['Todos', 'Polos', 'Box-sizing', 'Hoodies']
-const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+const categories = ['Todos', 'Polos', 'Camisas boxy-fit', 'Zip Hoddies']
+const sizes = ['S', 'M', 'L']
 const priceRanges = [
   { label: 'Menos de S/. 100', value: '0-100' },
   { label: 'S/. 100 - S/. 150', value: '100-150' },
