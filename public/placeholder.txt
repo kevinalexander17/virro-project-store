@@ -1,0 +1,5 @@
+Esta carpeta debe contener:
+- hero-bg.jpg (imagen de fondo para el hero section)
+- product-1.jpg (imagen del primer producto)
+- product-2.jpg (imagen del segundo producto)
+- product-3.jpg (imagen del tercer producto) 
