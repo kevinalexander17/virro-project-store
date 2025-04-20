@@ -1,94 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense } from 'react'
 import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
 
-interface Product {
-  id: string
-  name: string
-  price: number
-  image: string
-  category: string
-  sizes: string[]
-}
-
-const products: Product[] = [
-  {
-    id: '1',
-    name: 'POLO BOXY-FIT ESSENTIAL',
-    price: 150.00,
-    image: '/product-1.jpg',
-    category: 'boxy-fit-polos',
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: '2',
-    name: 'POLO BOXY-FIT CLASSIC',
-    price: 160.00,
-    image: '/product-2.jpg',
-    category: 'boxy-fit-polos',
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: '3',
-    name: 'CAMISA BOXY-FIT ESSENTIAL',
-    price: 180.00,
-    image: '/product-3.jpg',
-    category: 'boxy-fit-shirts',
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: '4',
-    name: 'CAMISA BOXY-FIT CLASSIC',
-    price: 190.00,
-    image: '/product-4.jpg',
-    category: 'boxy-fit-shirts',
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: '5',
-    name: 'ZIP HOODIE ESSENTIAL',
-    price: 220.00,
-    image: '/product-5.jpg',
-    category: 'zip-hoodies',
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: '6',
-    name: 'ZIP HOODIE CLASSIC',
-    price: 230.00,
-    image: '/product-6.jpg',
-    category: 'zip-hoodies',
-    sizes: ['S', 'M', 'L']
-  }
-]
-
-export default function Tienda() {
-  const searchParams = useSearchParams()
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedSize, setSelectedSize] = useState<string | null>(null)
-
-  useEffect(() => {
-    const category = searchParams.get('category')
-    if (category) {
-      setSelectedCategory(category)
-    }
-  }, [searchParams])
-
-  const filteredProducts = products.filter(product => {
-    const categoryMatch = !selectedCategory || product.category === selectedCategory
-    const sizeMatch = !selectedSize || product.sizes.includes(selectedSize)
-    return categoryMatch && sizeMatch
-  })
-
+function TiendaContent() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="relative h-[60vh] w-full">
         <Image
           src="/shop-hero.jpg"
-          alt="Shop Hero"
+          alt="Tienda"
           fill
           className="object-cover"
           priority
@@ -98,64 +20,64 @@ export default function Tienda() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row gap-12">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Filters */}
-          <div className="w-full md:w-64 space-y-8">
-            {/* Categories */}
-            <div>
-              <h2 className="text-xs font-light tracking-widest uppercase mb-4">CATEGORÍAS</h2>
-              <div className="space-y-2">
-                {['boxy-fit-polos', 'boxy-fit-shirts', 'zip-hoodies'].map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
-                    className={`block w-full text-left text-xs tracking-widest py-1 transition-colors ${
-                      selectedCategory === category ? 'text-black' : 'text-gray-500 hover:text-black'
-                    }`}
-                  >
-                    {category.toUpperCase().replace(/-/g, ' ')}
-                  </button>
-                ))}
+          <div className="md:col-span-1">
+            <div className="space-y-8">
+              {/* Categories */}
+              <div>
+                <h2 className="text-xs tracking-widest uppercase mb-4">CATEGORÍAS</h2>
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" className="form-checkbox" />
+                    <span className="text-sm">Boxy-fit shirts</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" className="form-checkbox" />
+                    <span className="text-sm">Zip Hoodies</span>
+                  </label>
+                  <label className="flex items-center space-x-2">
+                    <input type="checkbox" className="form-checkbox" />
+                    <span className="text-sm">Boxy-fit polos</span>
+                  </label>
+                </div>
               </div>
-            </div>
 
-            {/* Sizes */}
-            <div>
-              <h2 className="text-xs font-light tracking-widest uppercase mb-4">TALLA</h2>
-              <div className="grid grid-cols-3 gap-2">
-                {['S', 'M', 'L'].map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => setSelectedSize(selectedSize === size ? null : size)}
-                    className={`w-full aspect-square flex items-center justify-center text-xs tracking-widest border transition-colors ${
-                      selectedSize === size ? 'border-black' : 'border-gray-200 hover:border-black'
-                    }`}
-                  >
-                    {size}
-                  </button>
-                ))}
+              {/* Sizes */}
+              <div>
+                <h2 className="text-xs tracking-widest uppercase mb-4">TALLAS</h2>
+                <div className="grid grid-cols-3 gap-2">
+                  {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                    <button
+                      key={size}
+                      className="border border-black text-black hover:bg-black hover:text-white transition-colors duration-300 py-2 text-xs tracking-widest uppercase"
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
           {/* Products */}
-          <div className="flex-1">
+          <div className="md:col-span-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.map((product) => (
-                <div key={product.id} className="group">
-                  <div className="relative aspect-square mb-4 overflow-hidden">
+              {[1, 2, 3, 4, 5, 6].map((product) => (
+                <div key={product} className="product-card">
+                  <div className="relative aspect-square mb-4">
                     <Image
-                      src={product.image}
-                      alt={product.name}
+                      src={`/product-${product}.jpg`}
+                      alt={`Product ${product}`}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover product-image"
                     />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-xs tracking-widest uppercase mb-1">{product.name}</h3>
-                    <p className="text-xs tracking-widest text-gray-500">S/. {product.price.toFixed(2)}</p>
+                    <h3 className="text-xs tracking-widest uppercase mb-1">Product {product}</h3>
+                    <p className="text-sm text-gray-600">S/. 150.00</p>
                   </div>
                 </div>
               ))}
@@ -164,5 +86,13 @@ export default function Tienda() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Tienda() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TiendaContent />
+    </Suspense>
   )
 } 
