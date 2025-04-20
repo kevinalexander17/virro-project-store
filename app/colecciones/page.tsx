@@ -3,88 +3,59 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+const collections = [
+  {
+    id: '1',
+    name: 'NEW DROP',
+    description: 'Nuestra última colección',
+    image: '/new-drop.jpg',
+    link: '/tienda?collection=new-drop'
+  },
+  {
+    id: '2',
+    name: 'ESSENTIALS',
+    description: 'Piezas esenciales para tu guardarropa',
+    image: '/essentials.jpg',
+    link: '/tienda?collection=essentials'
+  }
+]
+
 export default function Colecciones() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative h-[80vh]">
+      <div className="relative h-[60vh] w-full">
         <Image
-          src="/collection-hero.jpg"
-          alt="Nueva Colección VirroProject"
+          src="/collections-hero.jpg"
+          alt="Colecciones"
           fill
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-light tracking-wider text-white mb-4">
-              NUEVA COLECCIÓN
-            </h1>
-            <p className="text-white text-sm tracking-wider">
-              DISPONIBLE PRÓXIMAMENTE
-            </p>
-          </div>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <h1 className="text-4xl md:text-6xl text-white font-serif tracking-widest">COLECCIONES</h1>
         </div>
       </div>
 
-      {/* Lookbook */}
-      <div className="max-w-[1600px] mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          <div className="relative aspect-square">
-            <Image
-              src="/lookbook-1.jpg"
-              alt="Lookbook 1"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="relative aspect-square">
-            <Image
-              src="/lookbook-2.jpg"
-              alt="Lookbook 2"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Productos Destacados */}
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-light tracking-wider mb-4">
-            PRODUCTOS DESTACADOS
-          </h2>
-          <p className="text-sm text-primary-600 tracking-wider">
-            DESCUBRE LAS PIEZAS CLAVE DE LA NUEVA COLECCIÓN
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="group">
+      {/* Collections Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {collections.map((collection) => (
+            <Link key={collection.id} href={collection.link} className="group">
               <div className="relative aspect-square mb-4 overflow-hidden">
                 <Image
-                  src={`/collection-product-${item}.jpg`}
-                  alt={`Producto ${item}`}
+                  src={collection.image}
+                  alt={collection.name}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-sm font-medium tracking-wider mb-1 transition-colors duration-300 group-hover:text-primary-800">
-                NUEVO PRODUCTO {item}
-              </h3>
-              <p className="text-sm text-primary-600">PRÓXIMAMENTE</p>
-            </div>
+              <div className="text-center">
+                <h2 className="text-xs tracking-widest uppercase mb-1">{collection.name}</h2>
+                <p className="text-xs tracking-widest text-gray-500">{collection.description}</p>
+              </div>
+            </Link>
           ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-20">
-          <Link
-            href="/tienda"
-            className="inline-block border border-primary-800 px-8 py-3 text-sm tracking-wider transition-colors duration-300 hover:bg-primary-800 hover:text-white"
-          >
-            VER TIENDA
-          </Link>
         </div>
       </div>
     </div>

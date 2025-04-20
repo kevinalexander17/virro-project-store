@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 interface Product {
   id: string
@@ -15,63 +16,65 @@ interface Product {
 const products: Product[] = [
   {
     id: '1',
-    name: 'CAMISA BOXY-FIT ESSENTIAL',
+    name: 'POLO BOXY-FIT ESSENTIAL',
     price: 150.00,
     image: '/product-1.jpg',
-    category: 'camisas',
+    category: 'boxy-fit-polos',
     sizes: ['S', 'M', 'L']
   },
   {
     id: '2',
-    name: 'CAMISA BOXY-FIT CLASSIC',
+    name: 'POLO BOXY-FIT CLASSIC',
     price: 160.00,
     image: '/product-2.jpg',
-    category: 'camisas',
+    category: 'boxy-fit-polos',
     sizes: ['S', 'M', 'L']
   },
   {
     id: '3',
-    name: 'ZIP HOODIE ESSENTIAL',
+    name: 'CAMISA BOXY-FIT ESSENTIAL',
     price: 180.00,
     image: '/product-3.jpg',
-    category: 'hoodies',
+    category: 'boxy-fit-shirts',
     sizes: ['S', 'M', 'L']
   },
   {
     id: '4',
-    name: 'ZIP HOODIE CLASSIC',
+    name: 'CAMISA BOXY-FIT CLASSIC',
     price: 190.00,
     image: '/product-4.jpg',
-    category: 'hoodies',
+    category: 'boxy-fit-shirts',
     sizes: ['S', 'M', 'L']
   },
   {
     id: '5',
-    name: 'POLO BOXY-FIT ESSENTIAL',
-    price: 120.00,
+    name: 'ZIP HOODIE ESSENTIAL',
+    price: 220.00,
     image: '/product-5.jpg',
-    category: 'polos',
+    category: 'zip-hoodies',
     sizes: ['S', 'M', 'L']
   },
   {
     id: '6',
-    name: 'POLO BOXY-FIT CLASSIC',
-    price: 130.00,
+    name: 'ZIP HOODIE CLASSIC',
+    price: 230.00,
     image: '/product-6.jpg',
-    category: 'polos',
+    category: 'zip-hoodies',
     sizes: ['S', 'M', 'L']
   }
 ]
 
-const categories = [
-  { id: 'camisas', name: 'CAMISAS BOXY-FIT' },
-  { id: 'hoodies', name: 'ZIP HOODIES' },
-  { id: 'polos', name: 'POLOS BOXY-FIT' }
-]
-
 export default function Tienda() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('')
-  const [selectedSize, setSelectedSize] = useState<string>('')
+  const searchParams = useSearchParams()
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
+
+  useEffect(() => {
+    const category = searchParams.get('category')
+    if (category) {
+      setSelectedCategory(category)
+    }
+  }, [searchParams])
 
   const filteredProducts = products.filter(product => {
     const categoryMatch = !selectedCategory || product.category === selectedCategory
@@ -80,59 +83,54 @@ export default function Tienda() {
   })
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative h-[80vh]">
+      <div className="relative h-[60vh] w-full">
         <Image
           src="/shop-hero.jpg"
-          alt="Tienda VirroProject"
+          alt="Shop Hero"
           fill
           className="object-cover"
           priority
-          quality={100}
-          unoptimized
         />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-          <h1 className="text-4xl md:text-6xl font-light tracking-wider text-white">TIENDA</h1>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <h1 className="text-4xl md:text-6xl text-white font-serif tracking-widest">TIENDA</h1>
         </div>
       </div>
 
-      <div className="max-w-[1600px] mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
-          {/* Filtros */}
-          <div className="space-y-12">
-            {/* Categorías */}
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="flex flex-col md:flex-row gap-12">
+          {/* Filters */}
+          <div className="w-full md:w-64 space-y-8">
+            {/* Categories */}
             <div>
-              <h2 className="text-sm font-medium uppercase tracking-wider mb-6">CATEGORÍAS</h2>
+              <h2 className="text-xs font-light tracking-widest uppercase mb-4">CATEGORÍAS</h2>
               <div className="space-y-2">
-                {categories.map((category) => (
+                {['boxy-fit-polos', 'boxy-fit-shirts', 'zip-hoodies'].map((category) => (
                   <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(selectedCategory === category.id ? '' : category.id)}
-                    className={`block w-full text-left py-2 text-sm tracking-wider transition-colors duration-300 ${
-                      selectedCategory === category.id
-                        ? 'text-primary-800'
-                        : 'text-primary-600 hover:text-primary-800'
+                    key={category}
+                    onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                    className={`block w-full text-left text-xs tracking-widest py-1 transition-colors ${
+                      selectedCategory === category ? 'text-black' : 'text-gray-500 hover:text-black'
                     }`}
                   >
-                    {category.name}
+                    {category.toUpperCase().replace(/-/g, ' ')}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Talla */}
+            {/* Sizes */}
             <div>
-              <h2 className="text-sm font-medium uppercase tracking-wider mb-6">TALLA</h2>
-              <div className="flex gap-2">
+              <h2 className="text-xs font-light tracking-widest uppercase mb-4">TALLA</h2>
+              <div className="grid grid-cols-3 gap-2">
                 {['S', 'M', 'L'].map((size) => (
                   <button
                     key={size}
-                    onClick={() => setSelectedSize(selectedSize === size ? '' : size)}
-                    className={`w-10 h-10 flex items-center justify-center border text-sm tracking-wider transition-all duration-300 ${
-                      selectedSize === size
-                        ? 'border-primary-800 text-primary-800'
-                        : 'border-primary-200 text-primary-600 hover:border-primary-800'
+                    onClick={() => setSelectedSize(selectedSize === size ? null : size)}
+                    className={`w-full aspect-square flex items-center justify-center text-xs tracking-widest border transition-colors ${
+                      selectedSize === size ? 'border-black' : 'border-gray-200 hover:border-black'
                     }`}
                   >
                     {size}
@@ -142,9 +140,9 @@ export default function Tienda() {
             </div>
           </div>
 
-          {/* Productos */}
-          <div className="md:col-span-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Products */}
+          <div className="flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="group">
                   <div className="relative aspect-square mb-4 overflow-hidden">
@@ -152,13 +150,13 @@ export default function Tienda() {
                       src={product.image}
                       alt={product.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
-                  <h3 className="text-sm font-medium tracking-wider mb-1 transition-colors duration-300 group-hover:text-primary-800">
-                    {product.name}
-                  </h3>
-                  <p className="text-sm text-primary-600">S/. {product.price.toFixed(2)}</p>
+                  <div className="text-center">
+                    <h3 className="text-xs tracking-widest uppercase mb-1">{product.name}</h3>
+                    <p className="text-xs tracking-widest text-gray-500">S/. {product.price.toFixed(2)}</p>
+                  </div>
                 </div>
               ))}
             </div>

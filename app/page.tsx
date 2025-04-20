@@ -5,115 +5,107 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main>
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-screen">
-        <div className="absolute inset-0 w-full h-full">
+      <div className="relative h-[90vh] w-full">
+        <Image
+          src="/hero-bg.jpg"
+          alt="VirroProject Hero"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl text-white font-serif tracking-widest mb-8">VIRRO PROJECT</h1>
+            <Link href="/tienda" className="inline-block border border-white text-white px-8 py-3 text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-colors">
+              VER COLECCIÓN
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <h2 className="text-xs tracking-widest uppercase text-center mb-12">CATEGORÍAS</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Boxy-fit Polos */}
+          <Link href="/tienda?category=boxy-fit-polos" className="group">
+            <div className="relative aspect-square mb-4 overflow-hidden">
+              <Image
+                src="/category-1.jpg"
+                alt="Boxy-fit Polos"
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="text-center">
+              <h2 className="text-xs tracking-widest uppercase mb-1">BOXY-FIT POLOS</h2>
+              <p className="text-xs tracking-widest text-gray-500">VER COLECCIÓN</p>
+            </div>
+          </Link>
+
+          {/* Boxy-fit Shirts */}
+          <Link href="/tienda?category=boxy-fit-shirts" className="group">
+            <div className="relative aspect-square mb-4 overflow-hidden">
+              <Image
+                src="/category-2.jpg"
+                alt="Boxy-fit Shirts"
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="text-center">
+              <h2 className="text-xs tracking-widest uppercase mb-1">BOXY-FIT SHIRTS</h2>
+              <p className="text-xs tracking-widest text-gray-500">VER COLECCIÓN</p>
+            </div>
+          </Link>
+
+          {/* Zip Hoodies */}
+          <Link href="/tienda?category=zip-hoodies" className="group">
+            <div className="relative aspect-square mb-4 overflow-hidden">
+              <Image
+                src="/category-3.jpg"
+                alt="Zip Hoodies"
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="text-center">
+              <h2 className="text-xs tracking-widest uppercase mb-1">ZIP HOODIES</h2>
+              <p className="text-xs tracking-widest text-gray-500">VER COLECCIÓN</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      {/* New Drop */}
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <div className="relative h-[90vh]">
           <Image
-            src="/hero-bg.jpg"
-            alt="VirroProject Collection"
+            src="/collection-1.jpg"
+            alt="New Drop Collection 1"
             fill
-            sizes="100vw"
             className="object-cover"
-            priority
-            quality={100}
-            unoptimized
+          />
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <div className="text-center">
+              <h2 className="text-4xl md:text-6xl text-white font-serif tracking-widest mb-8">NEW DROP</h2>
+              <Link href="/colecciones" className="inline-block border border-white text-white px-8 py-3 text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-colors">
+                DESCUBRIR
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="relative h-[90vh]">
+          <Image
+            src="/collection-2.jpg"
+            alt="New Drop Collection 2"
+            fill
+            className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-          <div className="text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-light tracking-wider mb-6">NUEVA COLECCIÓN</h1>
-            <Link 
-              href="/tienda"
-              className="inline-block border border-white px-8 py-3 text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-colors duration-300"
-            >
-              DESCUBRIR
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Collections */}
-      <section className="py-20">
-        <div className="max-w-[1600px] mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Link href="/colecciones/most-wanted" className="group">
-              <div className="relative aspect-[4/5]">
-                <Image
-                  src="/collection-1.jpg"
-                  alt="Most Wanted Collection"
-                  fill
-                  className="object-cover group-hover:opacity-90 transition-opacity duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="text-2xl font-light tracking-wider text-white">MOST WANTED</h2>
-                </div>
-              </div>
-            </Link>
-            <Link href="/colecciones/origins" className="group">
-              <div className="relative aspect-[4/5]">
-                <Image
-                  src="/collection-2.jpg"
-                  alt="Origins Collection"
-                  fill
-                  className="object-cover group-hover:opacity-90 transition-opacity duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h2 className="text-2xl font-light tracking-wider text-white">ORIGINS</h2>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories Grid */}
-      <section className="py-20 bg-background">
-        <div className="max-w-[1600px] mx-auto px-4">
-          <h2 className="text-2xl font-light tracking-wider mb-12 text-center">CATEGORÍAS</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link href="/tienda?category=camisas" className="group">
-              <div className="relative aspect-square">
-                <Image
-                  src="/category-1.jpg"
-                  alt="Camisas Boxy-fit"
-                  fill
-                  className="object-cover group-hover:opacity-90 transition-opacity duration-300"
-                />
-                <div className="absolute inset-0 flex items-end p-6">
-                  <span className="text-lg text-white tracking-wider">CAMISAS BOXY-FIT</span>
-                </div>
-              </div>
-            </Link>
-            <Link href="/tienda?category=hoodies" className="group">
-              <div className="relative aspect-square">
-                <Image
-                  src="/category-2.jpg"
-                  alt="Zip Hoodies"
-                  fill
-                  className="object-cover group-hover:opacity-90 transition-opacity duration-300"
-                />
-                <div className="absolute inset-0 flex items-end p-6">
-                  <span className="text-lg text-white tracking-wider">ZIP HOODIES</span>
-                </div>
-              </div>
-            </Link>
-            <Link href="/tienda?category=polos" className="group">
-              <div className="relative aspect-square">
-                <Image
-                  src="/category-3.jpg"
-                  alt="Polos Boxy-fit"
-                  fill
-                  className="object-cover group-hover:opacity-90 transition-opacity duration-300"
-                />
-                <div className="absolute inset-0 flex items-end p-6">
-                  <span className="text-lg text-white tracking-wider">POLOS BOXY-FIT</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+      </div>
+    </div>
   )
 } 
