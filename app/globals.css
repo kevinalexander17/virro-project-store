@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 :root {
-  --font-sans: 'Neue Haas Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
   --font-serif: 'Playfair Display', serif;
 }
 
@@ -30,6 +30,7 @@ h1, h2, h3, h4, h5, h6 {
   .btn {
     @apply uppercase tracking-widest text-xs font-light transition-all duration-300 ease-out;
     letter-spacing: 0.15em;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .btn-primary {
@@ -42,6 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 
   .input {
     @apply w-full border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:border-black transition-colors duration-300;
+    -webkit-appearance: none;
   }
 
   .nav-link {
@@ -52,14 +54,18 @@ h1, h2, h3, h4, h5, h6 {
   .input-field {
     @apply mt-1 block w-full rounded-none border-gray-200 shadow-sm 
            focus:border-black focus:ring-black font-light text-xs tracking-widest transition-colors duration-300;
+    -webkit-appearance: none;
   }
 
   .product-card {
     @apply relative overflow-hidden transition-all duration-300 ease-out;
+    will-change: transform;
   }
 
   .product-image {
     @apply transition-transform duration-500 ease-out;
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .product-card:hover .product-image {
@@ -68,14 +74,17 @@ h1, h2, h3, h4, h5, h6 {
 
   .fade-in {
     animation: fadeIn 0.5s ease-out;
+    will-change: opacity;
   }
 
   .slide-up {
     animation: slideUp 0.5s ease-out;
+    will-change: transform, opacity;
   }
 
   .slide-down {
     animation: slideDown 0.5s ease-out;
+    will-change: transform, opacity;
   }
 }
 
@@ -91,17 +100,21 @@ h1, h2, h3, h4, h5, h6 {
 /* Transiciones */
 .transition-all {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Hover states */
 .hover\:scale-105:hover {
   transform: scale(1.05);
+  -webkit-transform: scale(1.05);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover\:opacity-75:hover {
   opacity: 0.75;
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Animaciones personalizadas */
@@ -114,13 +127,35 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(20px);
+    -webkit-transform: translateY(20px);
     opacity: 0;
   }
   to {
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slideUp {
+  from {
+    -webkit-transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateY(0);
     opacity: 1;
   }
 }
@@ -128,11 +163,41 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes slideDown {
   from {
     transform: translateY(-20px);
+    -webkit-transform: translateY(-20px);
     opacity: 0;
   }
   to {
     transform: translateY(0);
+    -webkit-transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@-webkit-keyframes slideDown {
+  from {
+    -webkit-transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    -webkit-transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Media queries para optimizar animaciones en móviles */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card:hover .product-image {
+    transform: none;
+    -webkit-transform: none;
   }
 }
 
