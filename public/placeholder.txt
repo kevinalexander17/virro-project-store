@@ -1,5 +1,19 @@
-Esta carpeta debe contener:
-- hero-bg.jpg (imagen de fondo para el hero section)
-- product-1.jpg (imagen del primer producto)
-- product-2.jpg (imagen del segundo producto)
-- product-3.jpg (imagen del tercer producto) 
+Archivos de imagen en la carpeta public:
+
+1. hero-bg.jpg - Imagen de fondo para la sección hero de la página principal
+2. shop-hero.jpg - Imagen de fondo para la cabecera de la página de tienda
+3. collections-hero.jpg - Imagen de fondo para la cabecera de la página de colecciones
+4. logo.png - Logo de Virro Project usado como favicon y en el header/footer
+5. category-1.jpg - Imagen para la categoría "Hoodies" en la página principal
+6. category-2.jpg - Imagen para la categoría "Camisetas" en la página principal
+7. category-3.jpg - Imagen para la categoría "Pantalones" en la página principal
+8. product-1.jpg - Imagen del producto 1 en la página de tienda y página principal
+9. product-2.jpg - Imagen del producto 2 en la página de tienda y página principal 
+10. product-3.jpg - Imagen del producto 3 en la página de tienda y página principal
+11. product-4.jpg - Imagen del producto 4 en la página de tienda y página principal
+12. product-5.jpg - Imagen del producto 5 en la página de tienda
+13. product-6.jpg - Imagen del producto 6 en la página de tienda
+14. collection-1.jpg - Imagen para la colección "Urban" en la página de colecciones
+15. collection-2.jpg - Imagen para la colaboración "Virro × Brand" en la página de colecciones
+16. essentials.jpg - Imagen para la colección "Essentials" en la página de colecciones
+17. new-drop.jpg - Imagen para la sección "New Drop" en la página de colecciones 
