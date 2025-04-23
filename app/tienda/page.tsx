@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Tienda() {
   return (
@@ -79,7 +80,7 @@ export default function Tienda() {
           <div className="flex-1">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
               {[1, 2, 3, 4, 5, 6].map((product) => (
-                <div key={product} className="group cursor-pointer">
+                <Link href={`/producto/${product}`} key={product} className="group cursor-pointer">
                   <div className="relative aspect-square overflow-hidden">
                     <Image 
                       src={`/product-${product}.jpg`}
@@ -92,7 +93,7 @@ export default function Tienda() {
                     <h3 className="text-sm uppercase tracking-wide mb-1">Producto {product}</h3>
                     <p className="text-gray-700">S/. 150.00</p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
